@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Вход · College HelpDesk{% endblock %}
+{% block content %}
+  <section class="login-layout">
+    <article class="hero-card">
+      <p class="eyebrow">Учебный сервис заявок</p>
+      <h1>Помогаем колледжу чинить рабочий день.</h1>
+      <p>Оставляйте обращения по технике, доступам, аудиториям и учебным сервисам.</p>
+    </article>
+    <form class="panel login-form" method="post">
+      <h2>Вход</h2>
+      <label>
+        Логин
+        <input name="username" autocomplete="username" required>
+      </label>
+      <label>
+        Пароль
+        <input type="password" name="password" autocomplete="current-password" required>
+      </label>
+      <button type="submit">Войти</button>
+    </form>
+  </section>
+{% endblock %}

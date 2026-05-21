@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}Заявка #{{ ticket.id }} · College HelpDesk{% endblock %}
+{% block content %}
+  <section class="page-title detail-title">
+    <div>
+      <p class="eyebrow">Заявка #{{ ticket.id }}</p>
+      <h1>{{ ticket.subject or "Без темы" }}</h1>
+    </div>
+    <span class="status status-{{ ticket.status|replace(" ", "-") }}">{{ ticket.status }}</span>
+  </section>
+  <section class="detail-grid">
+    <article class="panel">
+      <h2>Данные заявки</h2>
+      <dl class="meta-grid">
+        <div><dt>Категория</dt><dd>{{ ticket.category }}</dd></div>
+        <div><dt>Аудитория</dt><dd>{{ ticket.room or "Не указана" }}</dd></div>
+        <div><dt>Приоритет</dt><dd>{{ ticket.priority }}</dd></div>
+        <div><dt>Контакт</dt><dd>{{ ticket.contact or "Не указан" }}</dd></div>
+        <div><dt>Автор</dt><dd>{{ ticket.author_name }} ({{ ticket.author_username }})</dd></div>
+        <div><dt>Исполнитель</dt><dd>{{ ticket.assignee_name or "Не назначен" }}</dd></div>
+        <div><dt>Создана</dt><dd>{{ ticket.created_at }}</dd></div>
+        <div><dt>Обновлена</dt><dd>{{ ticket.updated_at }}</dd></div>
+      </dl>
+      <h3>Описание</h3>
+      <p class="description">{{ ticket.description or "Описание не заполнено." }}</p>
+    </article>
+    <aside class="panel action-panel">
+      <h2>Обработка</h2>
+      {% if current_user.role in ["admin", "executor"] %}
+        <form method="post" action="{{ url_for('change_status', ticket_id=ticket.id) }}">
+          <label>
+            Статус
+            <select name="status">
+              {% for status in statuses %}
+                <option value="{{ status }}" {% if ticket.status == status %}selected{% endif %}>{{ status }}</option>
+              {% endfor %}
+            </select>
+          </label>
+          <button type="submit">Сохранить статус</button>
+        </form>
+      {% endif %}
+      {% if current_user.role == "admin" %}
+        <form method="post" action="{{ url_for('assign_ticket', ticket_id=ticket.id) }}">
+          <label>
+            Исполнитель
+            <select name="assignee_id">
+              <option value="">Не назначен</option>
+              {% for executor in executors %}
+                <option value="{{ executor.id }}" {% if ticket.assignee_id == executor.id %}selected{% endif %}>{{ executor.full_name }}</option>
+              {% endfor %}
+            </select>
+          </label>
+          <button type="submit">Назначить</button>
+        </form>
+      {% endif %}
+    </aside>
+  </section>
+  <section class="split-sections">
+    <article class="panel">
+      <div class="section-head">
+        <h2>Комментарии</h2>
+        <span class="muted">{{ comments|length }}</span>
+      </div>
+      <div class="comments">
+        {% for comment in comments %}
+          <article class="comment">
+            <header>
+              <strong>{{ comment.author_name }}</strong>
+              <span>{{ comment.author_role }} · {{ comment.created_at }}</span>
+            </header>
+            <div>{{ comment.body|safe }}</div>
+          </article>
+        {% else %}
+          <p class="muted">Комментариев пока нет.</p>
+        {% endfor %}
+      </div>
+      <form class="comment-form" method="post" action="{{ url_for('add_comment', ticket_id=ticket.id) }}">
+        <label>
+          Новый комментарий
+          <textarea name="body" rows="3" placeholder="Добавьте уточнение"></textarea>
+        </label>
+        <button type="submit">Добавить комментарий</button>
+      </form>
+    </article>
+    <article class="panel">
+      <h2>История статусов</h2>
+      <ol class="history">
+        {% for record in history %}
+          <li>
+            <strong>{{ record.new_status }}</strong>
+            <span>{{ record.old_status or "создание" }} → {{ record.new_status }}</span>
+            <small>{{ record.changed_by_name }} · {{ record.changed_at }}</small>
+          </li>
+        {% else %}
+          <li class="muted">Изменений пока нет.</li>
+        {% endfor %}
+      </ol>
+    </article>
+  </section>
+{% endblock %}

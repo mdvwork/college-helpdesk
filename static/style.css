@@ -1,0 +1,528 @@
+:root {
+  color-scheme: light;
+  --ink: #16202f;
+  --muted: #66758c;
+  --line: #dce5f2;
+  --panel: rgba(255, 255, 255, 0.92);
+  --brand: #3157d5;
+  --brand-soft: #e8efff;
+  --success: #146c43;
+  --warning: #9a5a00;
+  --danger: #b42318;
+  --shadow: 0 18px 60px rgba(18, 37, 72, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, #d8e7ff 0, transparent 30rem),
+    linear-gradient(135deg, #f7faff, #eef3fb);
+  font: 16px/1.5 Inter, "Segoe UI", Arial, sans-serif;
+}
+
+a {
+  color: var(--brand);
+  text-decoration: none;
+}
+
+button,
+.button,
+.ghost-button {
+  border: 0;
+  border-radius: 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 18px;
+  background: var(--brand);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.ghost-button {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  border: 1px solid #c9d6ea;
+  border-radius: 14px;
+  padding: 12px 14px;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.96);
+  font: inherit;
+}
+
+textarea {
+  resize: vertical;
+}
+
+label {
+  display: grid;
+  gap: 7px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 76px;
+  padding: 14px clamp(18px, 4vw, 54px);
+  border-bottom: 1px solid rgba(220, 229, 242, 0.9);
+  background: rgba(247, 250, 255, 0.88);
+  backdrop-filter: blur(18px);
+}
+
+.brand,
+.top-nav,
+.account,
+.page-title,
+.section-head,
+.ticket-actions,
+.form-actions {
+  display: flex;
+  align-items: center;
+}
+
+.brand {
+  gap: 12px;
+  color: var(--ink);
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.brand-mark {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 15px;
+  background: var(--brand);
+  color: #fff;
+}
+
+.top-nav,
+.account {
+  gap: 14px;
+}
+
+.top-nav a {
+  border-radius: 999px;
+  padding: 9px 12px;
+  color: var(--ink);
+}
+
+.top-nav a:hover {
+  background: var(--brand-soft);
+}
+
+.account {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.role,
+.priority {
+  border-radius: 999px;
+  padding: 4px 10px;
+  background: var(--brand-soft);
+  color: var(--brand);
+  font-weight: 800;
+}
+
+.page {
+  width: min(1220px, calc(100% - 36px));
+  margin: 0 auto;
+  padding: clamp(24px, 4vw, 48px) 0;
+}
+
+.page-title {
+  gap: 18px;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.page-title h1 {
+  margin-bottom: 0;
+  font-size: clamp(30px, 5vw, 54px);
+  line-height: 1.04;
+}
+
+.eyebrow {
+  margin-bottom: 8px;
+  color: var(--brand);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.panel,
+.hero-card,
+.stat-card {
+  border: 1px solid rgba(220, 229, 242, 0.95);
+  border-radius: 28px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+
+.panel {
+  padding: clamp(18px, 3vw, 30px);
+}
+
+.login-layout {
+  display: grid;
+  min-height: calc(100vh - 172px);
+  grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.7fr);
+  gap: 24px;
+  align-items: center;
+}
+
+.hero-card {
+  min-height: 440px;
+  padding: clamp(30px, 6vw, 78px);
+  background:
+    linear-gradient(145deg, rgba(49, 87, 213, 0.97), rgba(43, 167, 194, 0.87)),
+    #3157d5;
+  color: #fff;
+}
+
+.hero-card h1 {
+  max-width: 720px;
+  font-size: clamp(38px, 7vw, 86px);
+  line-height: 0.96;
+}
+
+.hero-card .eyebrow {
+  color: #dceaff;
+}
+
+.login-form {
+  display: grid;
+  gap: 18px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.admin-stats {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.stat-card {
+  display: grid;
+  gap: 8px;
+  padding: 24px;
+}
+
+.stat-card span,
+.muted,
+.ticket-card span,
+.comment header span,
+.history span,
+.history small,
+.field-note {
+  color: var(--muted);
+}
+
+.stat-card strong {
+  font-size: clamp(34px, 4vw, 52px);
+  line-height: 1;
+}
+
+.section-head {
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.ticket-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.ticket-card {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 18px;
+  color: var(--ink);
+  background: #fff;
+}
+
+.ticket-title,
+.subject-cell {
+  white-space: nowrap;
+}
+
+.ticket-number {
+  color: var(--brand);
+  font-weight: 900;
+}
+
+.status {
+  width: fit-content;
+  border-radius: 999px;
+  padding: 5px 11px;
+  background: #eef2f7;
+  color: #344054;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.status-новая {
+  background: #e8efff;
+  color: #2d55c7;
+}
+
+.status-в-работе {
+  background: #fff1db;
+  color: var(--warning);
+}
+
+.status-ожидает-ответа {
+  background: #f4e8ff;
+  color: #7239a8;
+}
+
+.status-решена {
+  background: #dcfce7;
+  color: var(--success);
+}
+
+.status-закрыта {
+  background: #fee4e2;
+  color: var(--danger);
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: 170px 170px minmax(220px, 1fr) 170px auto;
+  gap: 14px;
+  align-items: end;
+  margin-bottom: 18px;
+}
+
+.ticket-actions {
+  gap: 10px;
+  min-width: 330px;
+}
+
+.table-wrap {
+  overflow: visible;
+}
+
+table {
+  width: 100%;
+  min-width: 890px;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border-bottom: 1px solid var(--line);
+  padding: 14px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  color: var(--muted);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ticket-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.wide {
+  grid-column: 1 / -1;
+}
+
+.form-actions {
+  gap: 12px;
+}
+
+.detail-title h1 {
+  max-width: 960px;
+}
+
+.detail-grid,
+.split-sections {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.75fr);
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0 0 24px;
+}
+
+.meta-grid div {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 13px;
+  background: #fff;
+}
+
+dt {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+dd {
+  margin: 5px 0 0;
+}
+
+.description {
+  white-space: pre-wrap;
+}
+
+.action-panel form,
+.comment-form {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.comments {
+  display: grid;
+  gap: 12px;
+  margin: 18px 0;
+}
+
+.comment {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 15px;
+  background: #fff;
+}
+
+.comment header {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  margin-bottom: 9px;
+}
+
+.history {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding-left: 20px;
+}
+
+.history li {
+  display: grid;
+  gap: 3px;
+}
+
+.messages {
+  position: fixed;
+  top: 92px;
+  right: 24px;
+  z-index: 5;
+  display: grid;
+  gap: 10px;
+}
+
+.message {
+  min-width: 250px;
+  margin: 0;
+  border-radius: 18px;
+  padding: 14px 18px;
+  background: #fff;
+  box-shadow: var(--shadow);
+  transition: opacity 0.5s ease;
+}
+
+.message.success {
+  border-left: 5px solid var(--success);
+}
+
+.message.error {
+  border-left: 5px solid var(--danger);
+}
+
+.message.fade {
+  opacity: 0;
+}
+
+@media (max-width: 900px) {
+  .site-header,
+  .top-nav,
+  .account,
+  .page-title {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .login-layout,
+  .detail-grid,
+  .split-sections {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-grid,
+  .admin-stats,
+  .ticket-list,
+  .ticket-form,
+  .meta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filters {
+    grid-template-columns: 1fr;
+  }
+
+  .wide {
+    grid-column: auto;
+  }
+
+  .hero-card {
+    min-height: auto;
+  }
+}

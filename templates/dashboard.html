@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Главная · College HelpDesk{% endblock %}
+{% block content %}
+  <section class="page-title">
+    <div>
+      <p class="eyebrow">Рабочая панель</p>
+      <h1>Здравствуйте, {{ current_user.full_name }}.</h1>
+    </div>
+    <a class="button" href="{{ url_for('create_ticket') }}">Новая заявка</a>
+  </section>
+  <section class="stats-grid">
+    <article class="stat-card"><span>Всего заявок</span><strong>{{ statistics.total }}</strong></article>
+    <article class="stat-card"><span>Новые</span><strong>{{ statistics.new }}</strong></article>
+    <article class="stat-card"><span>Активные</span><strong>{{ statistics.active }}</strong></article>
+    <article class="stat-card"><span>Закрытые</span><strong>{{ statistics.closed }}</strong></article>
+  </section>
+  <section class="panel">
+    <div class="section-head">
+      <h2>Последние заявки</h2>
+      <a href="{{ url_for('tickets') }}">Открыть список</a>
+    </div>
+    <div class="ticket-list">
+      {% for ticket in tickets %}
+        <a class="ticket-card" href="{{ url_for('ticket_detail', ticket_id=ticket.id) }}">
+          <span class="ticket-number">#{{ ticket.id }}</span>
+          <strong class="ticket-title">{{ ticket.subject or "Без темы" }}</strong>
+          <span>{{ ticket.category }} · {{ ticket.room or "аудитория не указана" }}</span>
+          <span class="status status-{{ ticket.status|replace(" ", "-") }}">{{ ticket.status }}</span>
+        </a>
+      {% else %}
+        <p class="muted">Заявок пока нет.</p>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}

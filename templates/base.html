@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}College HelpDesk{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="{{ url_for('dashboard') if current_user else url_for('login') }}">
+        <span class="brand-mark">CH</span>
+        <span>College HelpDesk</span>
+      </a>
+      {% if current_user %}
+        <nav class="top-nav">
+          <a href="{{ url_for('dashboard') }}">Главная</a>
+          <a href="{{ url_for('tickets') }}">Заявки</a>
+          <a href="{{ url_for('create_ticket') }}">Создать</a>
+          {% if current_user.role in ["admin", "executor"] %}
+            <a href="{{ url_for('admin_panel') }}">Админ-панель</a>
+            <a href="{{ url_for('users') }}">Пользователи</a>
+          {% endif %}
+        </nav>
+        <div class="account">
+          <span>{{ current_user.full_name }}</span>
+          <span class="role">{{ current_user.role }}</span>
+          <a href="{{ url_for('logout') }}">Выйти</a>
+        </div>
+      {% endif %}
+    </header>
+    <main class="page">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <section class="messages">
+            {% for category, message in messages %}
+              <p class="message {{ category }}">{{ message }}</p>
+            {% endfor %}
+          </section>
+        {% endif %}
+      {% endwith %}
+      {% block content %}{% endblock %}
+    </main>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+</html>

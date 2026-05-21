@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Админ-панель · College HelpDesk{% endblock %}
+{% block content %}
+  <section class="page-title">
+    <div>
+      <p class="eyebrow">Контроль очереди</p>
+      <h1>Админ-панель</h1>
+    </div>
+    <a class="button" href="{{ url_for('users') }}">Пользователи</a>
+  </section>
+  <section class="stats-grid admin-stats">
+    <article class="stat-card"><span>Всего заявок</span><strong>{{ statistics.tickets }}</strong></article>
+    <article class="stat-card"><span>Новые</span><strong>{{ statistics.new }}</strong></article>
+    <article class="stat-card"><span>В работе</span><strong>{{ statistics.working }}</strong></article>
+    <article class="stat-card"><span>Решённые</span><strong>{{ statistics.resolved }}</strong></article>
+    <article class="stat-card"><span>Закрытые</span><strong>{{ statistics.closed }}</strong></article>
+    <article class="stat-card"><span>Пользователи</span><strong>{{ statistics.users }}</strong></article>
+  </section>
+  <section class="panel">
+    <h2>Подсказка дежурному</h2>
+    <p>Проверяйте новые обращения, назначайте исполнителей и отслеживайте заявки, ожидающие ответа.</p>
+  </section>
+{% endblock %}

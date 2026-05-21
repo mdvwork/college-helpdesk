@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Заявки · College HelpDesk{% endblock %}
+{% block content %}
+  <section class="page-title">
+    <div>
+      <p class="eyebrow">Очередь обращений</p>
+      <h1>Заявки</h1>
+    </div>
+    <a class="button" href="{{ url_for('create_ticket') }}">Создать заявку</a>
+  </section>
+  <form class="panel filters" method="get">
+    <label>
+      Статус
+      <select name="status">
+        <option value="">Все</option>
+        {% for status in statuses %}
+          <option value="{{ status }}" {% if filters.status == status %}selected{% endif %}>{{ status }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>
+      Категория
+      <select name="category">
+        <option value="">Все</option>
+        {% for category in categories %}
+          <option value="{{ category }}" {% if filters.category == category %}selected{% endif %}>{{ category }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label class="search-field">
+      Поиск по теме
+      <input name="search" value="{{ filters.search }}" placeholder="Например, проектор">
+    </label>
+    <label>
+      Сортировка
+      <select name="sort">
+        <option value="created" {% if filters.sort == "created" %}selected{% endif %}>По дате</option>
+        <option value="priority" {% if filters.sort == "priority" %}selected{% endif %}>По приоритету</option>
+        <option value="status" {% if filters.sort == "status" %}selected{% endif %}>По статусу</option>
+      </select>
+    </label>
+    <div class="ticket-actions">
+      <button type="submit">Применить</button>
+      <a class="ghost-button" href="{{ url_for('tickets') }}">Сбросить</a>
+    </div>
+  </form>
+  <section class="panel table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Тема</th>
+          <th>Категория</th>
+          <th>Статус</th>
+          <th>Приоритет</th>
+          <th>Автор</th>
+          <th>Исполнитель</th>
+          <th>Создана</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for ticket in tickets %}
+          <tr>
+            <td>#{{ ticket.id }}</td>
+            <td class="subject-cell"><a href="{{ url_for('ticket_detail', ticket_id=ticket.id) }}">{{ ticket.subject or "Без темы" }}</a></td>
+            <td>{{ ticket.category }}</td>
+            <td><span class="status status-{{ ticket.status|replace(" ", "-") }}">{{ ticket.status }}</span></td>
+            <td><span class="priority">{{ ticket.priority }}</span></td>
+            <td>{{ ticket.author_name }}</td>
+            <td>{{ ticket.assignee_name or "Не назначен" }}</td>
+            <td>{{ ticket.created_at }}</td>
+          </tr>
+        {% else %}
+          <tr><td colspan="8" class="muted">По текущим условиям заявок нет.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+{% endblock %}

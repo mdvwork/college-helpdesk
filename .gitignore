@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+college_helpdesk.db
+TEACHER_NOTES.md

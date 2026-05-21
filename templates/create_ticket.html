@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Новая заявка · College HelpDesk{% endblock %}
+{% block content %}
+  <section class="page-title">
+    <div>
+      <p class="eyebrow">Новое обращение</p>
+      <h1>Создать заявку</h1>
+    </div>
+  </section>
+  <form class="panel ticket-form" method="post">
+    <input id="requester-role" type="hidden" name="role" value="{{ current_user.role }}">
+    <label class="wide">
+      Тема заявки
+      <input name="subject" placeholder="Кратко опишите проблему">
+    </label>
+    <label>
+      Категория
+      <select name="category">
+        {% for category in categories %}
+          <option value="{{ category }}">{{ category }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>
+      Аудитория
+      <input name="room" placeholder="Например, 305">
+    </label>
+    <label>
+      Приоритет
+      <select name="priority">
+        {% for priority in priorities %}
+          <option value="{{ priority }}" {% if priority == "средний" %}selected{% endif %}>{{ priority }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>
+      Контакт для связи
+      <input name="contact" placeholder="Почта, телефон или кабинет">
+    </label>
+    <label class="wide">
+      Описание
+      <textarea name="description" rows="6" data-counter="description-counter" placeholder="Что случилось и когда это заметили?"></textarea>
+      <span class="field-note" id="description-counter">0 символов</span>
+    </label>
+    <div class="form-actions wide">
+      <button type="submit">Отправить заявку</button>
+      <a class="ghost-button" href="{{ url_for('tickets') }}">К списку</a>
+    </div>
+  </form>
+{% endblock %}
